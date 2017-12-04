@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.PostConstruct;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -23,10 +24,8 @@ public class MainController {
 
     @Autowired
     private ORMService ormService;
-
-
-    @GetMapping(value = "/")
-    public ModelAndView getAllUsers() {
+    @PostConstruct
+    private void soapGetData(){
         try {
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
@@ -43,6 +42,10 @@ public class MainController {
         } catch (DatatypeConfigurationException e) {
             e.printStackTrace();
         }
+    }
+
+    @GetMapping(value = "/")
+    public ModelAndView getAllUsers() {
         List<Currency> currencies = ormService.queryFindAllUsersJPA();
         return new ModelAndView("index", "resultObject", currencies);
     }
