@@ -24,6 +24,7 @@ public class MainController {
     @Autowired
     private ORMService ormService;
 
+
     @GetMapping(value = "/")
     public ModelAndView getAllUsers() {
         try {
